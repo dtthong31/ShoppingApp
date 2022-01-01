@@ -1,10 +1,10 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-export default function ProductScreen() {
+export default function LikeProductDetail() {
     return (
         <View style={{ flex: 1 }}>
-            <Text>ProductScreen</Text>
+            <Text>LikeProductDetail</Text>
         </View>
     )
 }
