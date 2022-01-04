@@ -1,15 +1,19 @@
 import React from "react"
 import AnimatedLottieView from 'lottie-react-native'
 import animation from '../../assets/index'
-const withLoading =
+import { View } from "react-native"
+import BackgroundView from "../../components/BackgroundView"
+const StartApp =
     Component => ({ isFetching, children, ...props }) => {
         if (isFetching) {
             return (
-                <AnimatedLottieView source={animation} autoPlay loop />
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <AnimatedLottieView source={animation} autoPlay loop />
+                </View>
             )
         }
         return <Component {...props}>{children}</Component>
 
 
     }
-export default withLoading;
+export default StartApp;
