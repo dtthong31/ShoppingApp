@@ -5,6 +5,7 @@ const initialState = {
     product: {},
     listProduct: [],
     listCategory: [],
+    listProductByCategory: [],
 }
 
 const productReducers = (state = initialState, { type, payload }) => {
@@ -18,7 +19,7 @@ const productReducers = (state = initialState, { type, payload }) => {
         case GET_LIST_PRODUCT_FAIL:
             return { ...state, isFetching: false };
         case GET_PRODUCT_BY_CATEGORY_SUCCESS:
-            return { ...state, isFetching: false, listProduct: payload };
+            return { ...state, isFetching: false, listProductByCategory: payload };
         case GET_PRODUCT_BY_CATEGORY_FAIL:
             return { ...state, isFetching: false };
         case GET_PRODUCT_BY_ID_SUCCESS:

@@ -5,9 +5,14 @@ import Text from '../../components/Text'
 import TextInput, { fontIcon } from '../../components/TextInput'
 import { styles } from './styles.Signup'
 import { COLORS } from '../../themes/style';
+import { screenName } from '../../utils/constant';
+import { useNavigation } from '@react-navigation/native';
+import { RadioButton } from 'react-native-paper';
 
 const SignUpDetail = () => {
     const [gender, setGender] = useState('true');
+    const navigation = useNavigation();
+    const [checked, setChecked] = useState('true');
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="light-content" />
@@ -16,23 +21,25 @@ const SignUpDetail = () => {
                 style={styles.topContent}
             >
                 <View style={{ marginBottom: 80 }}>
-                    <Text style={styles.textHeader}> Welcome to Shopping</Text>
+                    <Text style={styles.textHeader}> Welcome to Register</Text>
                     {/* <Text style={styles.textDescription}>I'm happy to see you again. You can continue where you left of by logging in.</Text> */}
                 </View>
                 <View >
                     <TextInput font={fontIcon.fontisto} icon='email' size={20} placeholder='Email Address' style={{ marginHorizontal: 5 }} />
                     <TextInput font={fontIcon.evilIcons} icon='lock' size={30} placeholder='Password' />
                     <TextInput font={fontIcon.antDesign} icon='user' size={20} placeholder='Name' style={{ marginHorizontal: 5 }} />
-                    <View style={{ backgroundColor: COLORS.lightGray, borderRadius: 10, marginBottom: 20 }}>
-                        <RNPickerSelect
-                            onValueChange={(value) => setGender(value)}
-                            value={gender}
-                            items={[
-                                { label: 'Nam', value: 'true' },
-                                { label: 'Nữ', value: 'false' },
-                            ]}
-                        />
-                    </View>
+                    <RadioButton.Group onValueChange={newValue => setChecked(newValue)} value={checked}>
+                        <View style={styles.viewRadio}>
+                            <View style={styles.radioBtn}>
+                                <RadioButton value="true" />
+                                <Text style={styles.textRadio}>Male</Text>
+                            </View>
+                            <View style={styles.radioBtn}>
+                                <RadioButton value="false" />
+                                <Text style={styles.textRadio}>Female</Text>
+                            </View>
+                        </View>
+                    </RadioButton.Group>
                     <TextInput font={fontIcon.feather} icon='phone' size={20} placeholder='Phone number' style={{ marginHorizontal: 5 }} />
                     <View>
                         <TouchableOpacity style={styles.btnSignup}>
@@ -42,7 +49,7 @@ const SignUpDetail = () => {
                 </View>
                 <View style={styles.viewSignUp}>
                     <Text>Already have an account?</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate(screenName.lo)}>
+                    <TouchableOpacity onPress={() => { navigation.navigate(screenName.login) }}>
                         <Text style={{ fontWeight: '900' }}>Sign in</Text>
                     </TouchableOpacity>
                 </View>

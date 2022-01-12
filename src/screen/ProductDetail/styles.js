@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     },
     bottomContent: {
         flex: 1,
-        paddingTop: 10
+        paddingTop: 10,
     },
     viewContent: {
         alignItems: 'center',
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: '700',
         fontSize: 18,
-        paddingTop: 10
+        paddingTop: 5
     }, likeProduct:
     {
         alignItems: 'flex-end',
@@ -74,13 +74,17 @@ const styles = StyleSheet.create({
         fontSize: 28
     },
     textTopContent: {
-        marginHorizontal: 10, marginRight: 50, width: '70%',
+        marginHorizontal: 10, marginRight: 10, width: '90%',
         height: '75%', justifyContent: 'flex-start'
     },
     styleTextBottomContent: {
         color: 'gray',
         fontWeight: '700',
         fontSize: 18,
+        width: '85%',
+        height: '35%',
+        paddingTop: 10,
+        marginHorizontal: 30,
     },
 });
 export default styles;

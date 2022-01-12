@@ -13,10 +13,10 @@ export const getRequestListCategory = () => {
         }
     }
 }
-export const getRequestProductByCategory = () => {
+export const getRequestProductByCategory = (id) => {
     return async dispatch => {
         try {
-            const res = await getProductByCateGory();
+            const res = await getProductByCateGory(id);
             dispatch(getProductByCategorySuccess(res?.data?.content));
         }
         catch (error) {

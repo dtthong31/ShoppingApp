@@ -38,5 +38,17 @@ export const styles = StyleSheet.create({
         fontWeight: '700',
         marginHorizontal: 15
     },
+    radioBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 40
+    },
+    textRadio: {
+        fontSize: 20
+    },
+    viewRadio: {
+        flexDirection: 'row',
+        marginBottom: 10,
+    },
     viewSignUp: { flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', marginBottom: 30 }
 })

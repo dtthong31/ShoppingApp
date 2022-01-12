@@ -11,13 +11,14 @@ export const fontIcon = {
     evilIcons: "EvilIcons",
     antDesign: 'AntDesign',
     feather: 'Feather',
+    entypo: 'Entypo'
 }
 export default class TextInput extends Component {
     state = {
         focusInput: false,
     }
     render() {
-        const { errorText, font, icon, placeholder, style, size, color = 'gray', onBlur, secureTextEntry, value } = this.props;
+        const { errorText, font, icon, placeholder, style, size, color = 'gray', onBlur, secureTextEntry, value, onChangeText } = this.props;
         const renderIconTextInput = () => {
             switch (font) {
                 case fontIcon.fontisto:
@@ -37,10 +38,9 @@ export default class TextInput extends Component {
                         {renderIconTextInput()}
                     </View>
                     <RNInput
-                        // {...this.props}
                         secureTextEntry={secureTextEntry}
+                        onChangeText={onChangeText}
                         style={[styles.styleTextInput,
-
                         this.state.focusInput && styles.styleFocus]}
                         placeholder={placeholder}
                         value={value}

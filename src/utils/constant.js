@@ -1,11 +1,11 @@
 export const screenName = {
     login: "Login",
     profile: "Profile",
-    product: "ProductScreen",
+    product: "Product",
     productDetail: "ProductDetail",
     productByCategory: "ProductByCategory",
-    likeProduct: "LikeProductDetail",
-    cartDetail: "CartDetail",
+    likeProduct: "Like Product",
+    cartDetail: "Cart",
     home: "Home",
     signUp: "SignUpDetail",
 }
