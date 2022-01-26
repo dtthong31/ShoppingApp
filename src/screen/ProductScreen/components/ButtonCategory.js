@@ -5,10 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import { screenName } from '../../../utils/constant';
 
 const ButtonCategory = (props) => {
-    const { categoryItem } = props;
+    const { categoryItem, token } = props;
     const navigation = useNavigation();
     return (
-        <TouchableOpacity onPress={() => navigation.navigate(screenName.productByCategory, { id: categoryItem.id })}>
+        <TouchableOpacity onPress={() => navigation.navigate(screenName.productByCategory, { id: categoryItem.id, token: token })}>
             <Text style={styles.styleTextBTN}>{categoryItem.category}</Text>
         </TouchableOpacity>
     )

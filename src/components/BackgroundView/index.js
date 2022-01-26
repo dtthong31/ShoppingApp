@@ -17,7 +17,7 @@ export default class BackgroundView extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: 'white',
+
         paddingTop: 3,
     }
 })

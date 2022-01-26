@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { KeyboardAvoidingView, SafeAreaView, TouchableOpacity, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from '../../components/Text'
@@ -6,17 +6,17 @@ import TextInput, { fontIcon } from '../../components/TextInput'
 import { styles } from './styles.Login'
 import { screenName } from "../../utils/constant"
 import { useNavigation } from '@react-navigation/native'
-import axios from 'axios'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
 import { LoginButton, AccessToken } from 'react-native-fbsdk-next';
 import BackgroundView from '../../components/BackgroundView';
-import StartApp from '../../HOC/StartApp';
-import { getIsFechingSelectors } from '../../redux/selector/productSelectors';
-import { useSelector } from 'react-redux';
-import { string } from 'yup';
-
-
+import { getTokenSelectors } from '../../redux/selector/productSelectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitFormLogin, submitTokenFacebook } from '../../api';
+import { setTokenSuccess } from '../../redux/actions/productActions';
+import AnimatedLottieView from 'lottie-react-native';
+import animation from '../../assets/index'
+import { setRequestLoginFB } from '../../redux/thunk/categoryThunkAction';
 const validateSchema = Yup.object().shape({
     email: Yup.string().email('Email không hợp lệ').required('Trường này bắt buộc nhập thông tin'),
     password: Yup.string().min(5, 'Passwork tối thiểu 5 ký tự').required('Trường này bắt buộc nhập thông tin'),
@@ -24,140 +24,115 @@ const validateSchema = Yup.object().shape({
 const validateSchemaError = Yup.object().shape({
     password: Yup.string().min(5, 'email or password fail'),
 });
-const BackgroundViewLoading = StartApp(BackgroundView);
-
 export default function LoginScreen() {
     const navigation = useNavigation();
-    const isFetching = useSelector(getIsFechingSelectors);
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
-    const [token, setToken] = useState();
-    useEffect(() => {
-        saveEmailToInput();
-    }, [])
-    const submitFormLogin = async (email, password) => {
-
-        return await axios({
-            method: 'post',
-            url: 'http://svcy3.myclass.vn/api/Users/signin',
-            data: {
-                email,
-                password
-            }
-        });
-    }
-
-    const getItem = async () => {
-        try {
-            const result = await AsyncStorage.getItem('token');
-            return result;
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    const saveEmailToInput = async () => {
-        const token = await getItem();
-        setToken(token);
-    }
-
+    const dispatch = useDispatch();
+    const token = useSelector(getTokenSelectors);
     const onSubmit = async ({ email, password }) => {
         try {
             const result = await submitFormLogin(email, password);
             await AsyncStorage.setItem('token', result?.data?.content?.accessToken);
-            const token = result?.data?.content;
-
-            if (token) {
+            const res = result?.data?.content?.accessToken;
+            dispatch(setTokenSuccess(res));
+            if (res) {
                 navigation.navigate(screenName.home);
             }
         } catch (error) {
             console.log(error);
+        }
+    }
+    const onSubmitFB = async ({ data }) => {
+        try {
+            const result = await setRequestLoginFB(data.accessToken.toString());
+            if (result?.statusCode === '200') {
+                // await AsyncStorage.setItem('token', result?.data?.content?.accessToken);
+                navigation.navigate(screenName.home);
+            }
+        } catch (error) {
 
         }
     }
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
-        >
-            {token !== null ? navigation.navigate(screenName.home) :
-                <BackgroundView >
-                    <View style={styles.topContent}>
-                        <View style={{ marginBottom: 80, marginTop: 50 }}>
-                            <Text style={styles.textHeader}> Welcome Back</Text>
-                            <Text style={styles.textDescription}>I'm happy to see you again. You can continue where you left of by logging in.</Text>
-                        </View>
+        <BackgroundView style={{ backgroundColor: '#4effc4' }}>
+            <View style={{ flex: 0.8, justifyContent: 'center', alignItems: 'center', backgroundColor: '#4effc4' }}>
+                <AnimatedLottieView style={{ height: 600 }} source={animation} autoPlay loop />
 
-                        <Formik
-                            initialValues={{ email: `${email}`, password: '' }}
-                            onSubmit={onSubmit}
-                            validationSchema={validateSchema}
-                        >
-                            {({ values, errors, handleChange, handleSubmit, handleBlur }) => (
-                                <View style={styles.formContent}>
-                                    <View style={{ alignItems: 'center' }}>
-                                        <TextInput
-                                            font={fontIcon.fontisto}
-                                            icon='email' size={20}
-                                            placeholder='Email Address'
-                                            style={{ marginHorizontal: 5 }}
-                                            onChangeText={handleChange('email')}
-                                            value={values.email}
-                                            errorText={errors.email} />
-                                        <TextInput
-                                            font={fontIcon.evilIcons}
-                                            onChangeText={handleChange('password')}
-                                            secureTextEntry={true}
-                                            icon='lock' size={30}
-                                            placeholder='Password'
-                                            value={values.password}
-                                            errorText={errors.password} />
-                                    </View>
+            </View>
+            <View style={styles.topContent}>
 
-                                    <TouchableOpacity style={styles.buttonForGot} >
-                                        <Text >Forgot Password?</Text>
+                <Text style={[styles.textHeader, { marginBottom: 30, backgroundColor: '#4effc4' }]}> You're Welcome </Text>
+
+                <Formik
+                    initialValues={{ email: '', password: '' }}
+                    onSubmit={onSubmit}
+                    validationSchema={validateSchema}
+                >
+                    {({ values, errors, handleChange, handleSubmit }) => (
+                        <View style={styles.formContent}>
+                            <View style={{ alignItems: 'center' }}>
+                                <TextInput
+                                    font={fontIcon.fontisto}
+                                    icon='email' size={20}
+                                    placeholder='Email Address'
+                                    style={{ marginHorizontal: 5 }}
+                                    onChangeText={handleChange('email')}
+                                    value={values.email}
+                                    errorText={errors.email} />
+                                <TextInput
+                                    font={fontIcon.evilIcons}
+                                    onChangeText={handleChange('password')}
+                                    secureTextEntry={true}
+                                    icon='lock' size={30}
+                                    placeholder='Password'
+                                    value={values.password}
+                                    errorText={errors.password} />
+                            </View>
+
+                            <TouchableOpacity style={styles.buttonForGot} >
+                                <Text >Forgot Password?</Text>
+                            </TouchableOpacity>
+                            <View  >
+                                <View style={{ marginTop: 20, width: '100%', alignItems: 'center' }}>
+                                    <TouchableOpacity style={styles.btnLoggin} onPress={handleSubmit}>
+                                        <Text style={{ fontWeight: '800', color: 'white' }}>Sign in</Text>
                                     </TouchableOpacity>
-                                    <View  >
-                                        <View style={{ marginTop: 20, width: '100%', alignItems: 'center' }}>
-                                            <TouchableOpacity style={styles.btnLoggin} onPress={handleSubmit}>
-                                                <Text style={{ fontWeight: '800', color: 'white' }}>Sign in</Text>
-                                            </TouchableOpacity>
-                                            <Text style={{ marginTop: 10 }}>or</Text>
-                                            <View>
-                                                <LoginButton
-                                                    onLoginFinished={
-                                                        (error, result) => {
-                                                            if (error) {
-                                                                console.log("login has error: " + result.error);
-                                                            } else if (result.isCancelled) {
-                                                                console.log("login is cancelled.");
-                                                            } else {
-                                                                AccessToken.getCurrentAccessToken().then(
-                                                                    (data) => {
-                                                                        console.log(data.accessToken.toString())
-                                                                    }
-                                                                )
+                                    <Text style={{ marginTop: 10 }}>or</Text>
+                                    <View>
+                                        <LoginButton
+                                            onLoginFinished={
+                                                (error, result) => {
+                                                    if (error) {
+                                                        console.log("login has error: " + result.error);
+                                                    } else if (result.isCancelled) {
+                                                        console.log("login is cancelled.");
+                                                    } else {
+                                                        AccessToken.getCurrentAccessToken().then(
+                                                            (data) => {
+                                                                onSubmitFB(data);
+                                                                console.log("fb", data.accessToken.toString())
                                                             }
-                                                        }
+                                                        )
                                                     }
-                                                    onLogoutFinished={() => console.log("logout.")} />
-                                            </View>
-                                        </View>
+                                                }
+                                            }
+                                            onLogoutFinished={() => console.log("logout.")} />
                                     </View>
                                 </View>
-                            )}
+                            </View>
+                        </View>
+                    )}
 
-                        </Formik>
-                    </View>
+                </Formik>
+                <View style={styles.viewSignUp}>
+                    <Text>Don't have an account? </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate(screenName.signUp)}>
+                        <Text style={{ fontWeight: '900' }}>Sign up</Text>
+                    </TouchableOpacity>
+                </View>
 
-                    <View style={styles.viewSignUp}>
-                        <Text>Don't have an account? </Text>
-                        <TouchableOpacity onPress={() => navigation.navigate(screenName.signUp)}>
-                            <Text style={{ fontWeight: '900' }}>Sign up</Text>
-                        </TouchableOpacity>
-                    </View>
-                </BackgroundView>
-            }
-        </KeyboardAvoidingView>
-    )
+            </View>
+
+        </BackgroundView>
+    );
+
 }

@@ -9,6 +9,13 @@ export const GET_PRODUCT_BY_CATEGORY_SUCCESS = 'GET_PRODUCT_BY_CATEGORY_SUCCESS'
 export const GET_PRODUCT_BY_CATEGORY_FAIL = 'GET_PRODUCT_BY_CATEGORY_FAIL';
 export const GET_PRODUCT_BY_ID_FAIL = 'GET_PRODUCT_BY_ID_FAIL';
 export const GET_PRODUCT_BY_ID_SUCCESS = 'GET_PRODUCT_BY_ID_SUCCESS';
+export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
+export const GET_PROFILE_FAIL = 'GET_PROFILE_FAIL';
+export const SET_TOKEN = 'GET_TOKEN';
+export const GET_PRODUCT_FAVORITE_SUCCESS = 'GET_PRODUCT_FAVORITE_SUCCESS';
+export const GET_PRODUCT_FAVORITE_FAIL = 'GET_PRODUCT_FAVORITE_FAIL';
+export const LOGIN_FB_SUCCESS = 'LOGIN_FB_SUCCESS';
+export const LOGIN_FB_FAIL = 'LOGIN_FB_FAIL';
 
 // get list category
 export const getListCategorySuccess = (listCategory) => ({
@@ -42,6 +49,26 @@ export const getProductByIDSuccess = (listProduct) => ({
 export const getProductByIDFail = () => ({
     type: GET_PRODUCT_BY_ID_FAIL,
 })
+export const getProfileSuccess = (user) => ({
+    type: GET_PROFILE_SUCCESS,
+    payload: user,
+})
+export const getProfileFail = () => ({
+    type: GET_PROFILE_FAIL,
+})
+export const getProductFavoriteSuccess = (productsFavorite) => ({
+    type: GET_PRODUCT_FAVORITE_SUCCESS,
+    payload: productsFavorite,
+})
+export const getProductFavoriteFail = () => ({
+    type: GET_PRODUCT_FAVORITE_FAIL,
+})
 export const getRequestSuccess = () => ({ type: FETCHING_DATA_SUCCESS });
 export const getRequestFail = () => ({ type: FETCHING_DATA_FAIL });
 export const getRequest = () => ({ type: FETCHING_DATA });
+
+
+export const setTokenSuccess = (token) => ({
+    type: SET_TOKEN,
+    payload: token,
+});

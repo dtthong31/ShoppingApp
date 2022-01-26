@@ -5,8 +5,11 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     topContent: {
-        flex: 1,
+        flex: 1.5,
         alignItems: 'center',
+        borderTopLeftRadius: 70,
+        borderTopRightRadius: 70,
+        backgroundColor: 'white'
     },
     bottomContent: {
         flex: 0.5,
@@ -41,5 +44,5 @@ export const styles = StyleSheet.create({
         fontWeight: '700',
         marginHorizontal: 15
     },
-    viewSignUp: { flex: 0.5, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', marginBottom: 30 }
+    viewSignUp: { flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', marginBottom: 30 }
 })

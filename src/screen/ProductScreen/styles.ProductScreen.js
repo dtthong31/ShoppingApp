@@ -9,13 +9,14 @@ export const styles = StyleSheet.create({
         paddingRight: 30
     },
     container: {
-        // backgroundColor: 'black',
+        backgroundColor: '#4effc4',
         flex: 1,
     },
     product: {
         marginTop: 10,
-        marginHorizontal: 16,
-        paddingVertical: 20
+        marginLeft: 18,
+        marginHorizontal: 14,
+        paddingBottom: 20
     },
     styleText: {
         color: 'black',

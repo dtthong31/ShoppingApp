@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, View } from 'react-native';
-import { CartDetail, LikeProductDetail, LoginScreen, ProductByCategory, ProductDetail, ProductScreen, ProfileDetail, SignUpDetail, StartApp } from "../screen";
+import { CartDetail, LikeProductDetail, LoadToken, LoginScreen, ProductByCategory, ProductDetail, ProductScreen, ProfileDetail, SignUpDetail, StartApp } from "../screen";
 import { screenName } from "../utils/constant";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Entypo from 'react-native-vector-icons/Entypo'

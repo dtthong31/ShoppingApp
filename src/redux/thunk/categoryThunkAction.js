@@ -1,6 +1,43 @@
-import { getListCateGory, getListProduct, getProductByCateGory, getProductByID } from "../../api";
-import { getListCategoryFail, getListCategorySuccess, getListProductFail, getListProductSuccess, getProductByCategoryFail, getProductByCategorySuccess, getProductByIDFail, getProductByIDSuccess, getRequest } from "../actions/productActions";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+    getListCateGory,
+    getListProduct,
+    getProductByCateGory,
+    getProductByID,
+    getProductFavorite,
+    getProfileByToken,
+    setLikeProduct,
+    setUnLikeProduct,
+    submitTokenFacebook
+} from "../../api";
+import {
+    getListCategoryFail,
+    getListCategorySuccess,
+    getListProductFail,
+    getListProductSuccess,
+    getProductByCategoryFail,
+    getProductByCategorySuccess,
+    getProductByIDFail,
+    getProductByIDSuccess,
+    getProfileSuccess,
+    getProfileFail,
+    getProductFavoriteSuccess,
+    getProductFavoriteFail,
+    setTokenSuccess
+} from "../actions/productActions";
 
+export const setRequestLoginFB = (facebookToken) => {
+    return async dispatch => {
+        try {
+            console.log("fb111", facebookToken);
+            const res = await submitTokenFacebook(facebookToken);
+            dispatch(setTokenSuccess(res?.data?.content?.accessToken));
+        }
+        catch (error) {
+            console.log("Login fb ", error);
+        }
+    }
+}
 export const getRequestListCategory = () => {
     return async dispatch => {
         try {
@@ -46,6 +83,55 @@ export const getRequestProductByID = (id) => {
         catch (error) {
             console.log(error);
             dispatch(getProductByIDFail());
+        }
+    }
+}
+export const getRequestProfile = (token) => {
+    return async dispatch => {
+        try {
+            const res = await getProfileByToken(token);
+            dispatch(getProfileSuccess(res?.data?.content));
+        }
+        catch (error) {
+            console.log(error);
+            dispatch(getProfileFail());
+        }
+    }
+}
+export const getRequestProductFavorite = (token) => {
+    return async dispatch => {
+        try {
+            console.log("favorite", token);
+            const res = await getProductFavorite(token);
+            dispatch(getProductFavoriteSuccess(res?.data?.content?.productsFavorite));
+        }
+        catch (error) {
+            console.log(error);
+            dispatch(getProductFavoriteFail());
+        }
+    }
+}
+export const setRequestLikeproduct = (payload) => {
+    return async dispatch => {
+        try {
+
+            const res = await setLikeProduct(payload);
+            console.log(res.status);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+}
+export const setRequestUnLikeproduct = (payload) => {
+    return async dispatch => {
+        try {
+
+            const res = await setUnLikeProduct(payload);
+            console.log(res.status);
+        }
+        catch (error) {
+            console.log(error);
         }
     }
 }

@@ -1,29 +1,51 @@
-import React, { useEffect } from 'react'
+import { useRoute } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react'
 import { Text, View, FlatList } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import BackgroundView from '../../components/BackgroundView'
-import { getListCategorySelectors, getListProductSelectors } from '../../redux/selector/productSelectors';
-import { getRequestListCategory, getRequestListProduct } from '../../redux/thunk/categoryThunkAction';
+import { getListCategorySelectors, getListProductSelectors, getProductsFavoriteSelectors, getTokenSelectors } from '../../redux/selector/productSelectors';
+import { getRequestListCategory, getRequestListProduct, getRequestProductFavorite } from '../../redux/thunk/categoryThunkAction';
 import ButtonCategory from './components/ButtonCategory';
 import ItemList from './components/ItemList';
 import { styles } from './styles.ProductScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProductScreen() {
+
     const dispatch = useDispatch();
     const listCategory = useSelector(getListCategorySelectors);
     const listProduct = useSelector(getListProductSelectors);
+    const productsFavorite = useSelector(getProductsFavoriteSelectors);
+    const token = useSelector(getTokenSelectors);
+    const getItem = async () => {
+        try {
+            const res = await AsyncStorage.getItem('token');
+            console.log(res);
+        } catch (e) {
+            console.log(e);
+        }
+    }
     useEffect(() => {
+        getItem();
         dispatch(getRequestListCategory());
         dispatch(getRequestListProduct());
-    }, [])
+        dispatch(getRequestProductFavorite(token));
+    }, []);
+
+    const renderItemproduct = (item) => {
+        let favorite = productsFavorite.find((product) => product.id === item.id);
+        if (favorite) {
+            return <ItemList item={item} token={token} checkFavorite={true} />;
+        }
+        return <ItemList item={item} token={token} checkFavorite={false} />;
+    }
     return (
         <BackgroundView style={styles.container}>
             <View>
-                <Text style={styles.styleText}>List Category</Text>
                 <FlatList
                     data={listCategory}
                     contentContainerStyle={styles.category}
-                    renderItem={({ item }) => <ButtonCategory categoryItem={item} />}
+                    renderItem={({ item }) => <ButtonCategory categoryItem={item} token={token} />}
                     horizontal={true}
                     keyExtractor={item => item.id}
                     showsHorizontalScrollIndicator={false}
@@ -31,10 +53,10 @@ export default function ProductScreen() {
                 />
             </View>
             <View style={{ flex: 1, marginTop: 10 }}>
-                <Text style={styles.styleText}>List Product</Text>
+                <Text style={styles.styleText}>All Product</Text>
                 <FlatList
                     data={listProduct}
-                    renderItem={({ item }) => <ItemList item={item} />}
+                    renderItem={({ item }) => renderItemproduct(item)}
                     keyExtractor={item => item.id}
                     contentContainerStyle={styles.product}
                     numColumns={2}

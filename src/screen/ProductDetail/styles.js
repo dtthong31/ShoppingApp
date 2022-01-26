@@ -56,10 +56,10 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     styleText: {
-        color: 'black',
+        color: '#000',
         fontWeight: '700',
         fontSize: 18,
-        paddingTop: 5
+        // paddingTop: 5    
     }, likeProduct:
     {
         alignItems: 'flex-end',
@@ -82,9 +82,23 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 18,
         width: '85%',
-        height: '35%',
+        // height: '35%',
         paddingTop: 10,
         marginHorizontal: 30,
     },
+    viewBtnAdd: { marginTop: 15, justifyContent: 'center', alignItems: 'center' },
+    btnAdd: { backgroundColor: '#1f1f1f', height: 60, width: '90%', borderRadius: 20, justifyContent: 'center', alignItems: 'center' },
+    textAdd: { color: '#ffce68', fontSize: 25, fontWeight: '700' },
+    textPrice: { fontSize: 20, fontWeight: '700', paddingTop: 10, color: 'black' },
+    textCount: { fontSize: 20, fontWeight: '700', color: 'black' },
+    viewCount: { alignItems: 'baseline', paddingTop: 10, flexDirection: 'row', },
+    viewTotalAndCount: { justifyContent: 'space-between', paddingHorizontal: 25, flexDirection: 'row' },
+    viewBottom: { backgroundColor: '#FFF', width: '100%', height: '50%', borderRadius: 30 },
+    viewDescription: { flexDirection: 'row', marginHorizontal: 30, justifyContent: 'space-between', alignItems: 'baseline' },
+    btnLike: { position: 'absolute', alignItems: 'flex-end' },
+    btnSize: { width: 34, height: 32, backgroundColor: '#1f1f1f', borderRadius: 5, justifyContent: 'center', alignItems: 'center' },
+    viewSize: { flexDirection: 'row', marginLeft: 4, marginTop: 5, alignItems: 'baseline' },
+    viewTextPrice: { backgroundColor: '#1f1f1f', borderRadius: 10, marginTop: 5, width: 60, height: 35 },
+    viewNameAndPrice: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }
 });
 export default styles;

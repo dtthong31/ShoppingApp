@@ -8,4 +8,5 @@ export const screenName = {
     cartDetail: "Cart",
     home: "Home",
     signUp: "SignUpDetail",
+    loadToken: "LoadToken"
 }
