@@ -14,7 +14,6 @@ const ItemList = (props) => {
     const [check, setCheck] = useState(checkFavorite);
 
     const onPress = () => {
-        console.log(checkFavorite);
         if (check) {
             setCheck(false);
             setColor('#f93e3e');

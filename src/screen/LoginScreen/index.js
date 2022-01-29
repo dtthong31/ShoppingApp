@@ -18,13 +18,17 @@ import AnimatedLottieView from 'lottie-react-native';
 import animation from '../../assets/index'
 import { setRequestLoginFB } from '../../redux/thunk/categoryThunkAction';
 const validateSchema = Yup.object().shape({
-    email: Yup.string().email('Email không hợp lệ').required('Trường này bắt buộc nhập thông tin'),
-    password: Yup.string().min(5, 'Passwork tối thiểu 5 ký tự').required('Trường này bắt buộc nhập thông tin'),
+    email: Yup.string().email('Invalid email!').required('Email is required!'),
+    password: Yup.string().min(5, 'Passwork is too short!').required('Password is required!'),
 })
 const validateSchemaError = Yup.object().shape({
     password: Yup.string().min(5, 'email or password fail'),
 });
 export default function LoginScreen() {
+    const user = {
+        email: '',
+        password: ''
+    }
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const token = useSelector(getTokenSelectors);
@@ -41,10 +45,13 @@ export default function LoginScreen() {
             console.log(error);
         }
     }
-    const onSubmitFB = async ({ data }) => {
+    const onSubmitFB = async (accessToken) => {
         try {
-            const result = await setRequestLoginFB(data.accessToken.toString());
-            if (result?.statusCode === '200') {
+            console.log("submit");
+            const result = await submitTokenFacebook(accessToken);
+            console.log(result.data.statusCode);
+            if (result?.data?.statusCode === 200) {
+                dispatch(setTokenSuccess(result?.data?.content?.accessToken));
                 // await AsyncStorage.setItem('token', result?.data?.content?.accessToken);
                 navigation.navigate(screenName.home);
             }
@@ -63,7 +70,7 @@ export default function LoginScreen() {
                 <Text style={[styles.textHeader, { marginBottom: 30, backgroundColor: '#4effc4' }]}> You're Welcome </Text>
 
                 <Formik
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={user}
                     onSubmit={onSubmit}
                     validationSchema={validateSchema}
                 >
@@ -107,9 +114,9 @@ export default function LoginScreen() {
                                                         console.log("login is cancelled.");
                                                     } else {
                                                         AccessToken.getCurrentAccessToken().then(
-                                                            (data) => {
-                                                                onSubmitFB(data);
-                                                                console.log("fb", data.accessToken.toString())
+                                                            async (data) => {
+                                                                const accessToken = data.accessToken.toString();
+                                                                await onSubmitFB(accessToken);
                                                             }
                                                         )
                                                     }

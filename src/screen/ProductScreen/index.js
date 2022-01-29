@@ -20,7 +20,6 @@ export default function ProductScreen() {
     const getItem = async () => {
         try {
             const res = await AsyncStorage.getItem('token');
-            console.log(res);
         } catch (e) {
             console.log(e);
         }

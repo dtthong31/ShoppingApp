@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     topContent: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 80
+        marginTop: 30
     },
     bottomContent: {
         flex: 1,
@@ -50,5 +50,5 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 10,
     },
-    viewSignUp: { flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', marginBottom: 30 }
+    viewSignUp: { flex: 0.2, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', marginBottom: 30 }
 })

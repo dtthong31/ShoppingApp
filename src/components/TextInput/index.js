@@ -18,7 +18,7 @@ export default class TextInput extends Component {
         focusInput: false,
     }
     render() {
-        const { errorText, font, icon, placeholder, style, size, color = 'gray', onBlur, secureTextEntry, value, onChangeText } = this.props;
+        const { errorText, font, icon, placeholder, style, size, color = 'gray' } = this.props;
         const renderIconTextInput = () => {
             switch (font) {
                 case fontIcon.fontisto:
@@ -37,13 +37,13 @@ export default class TextInput extends Component {
                     <View style={style}>
                         {renderIconTextInput()}
                     </View>
-                    <RNInput
-                        secureTextEntry={secureTextEntry}
-                        onChangeText={onChangeText}
+                    <RNInput {...this.props}
+                        // secureTextEntry={secureTextEntry}
+                        // onChangeText={onChangeText}
                         style={[styles.styleTextInput,
                         this.state.focusInput && styles.styleFocus]}
                         placeholder={placeholder}
-                        value={value}
+                    // value={value}
                     />
                 </View>
                 <View style={{ marginBottom: 10 }}>

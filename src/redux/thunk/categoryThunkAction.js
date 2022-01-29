@@ -26,11 +26,11 @@ import {
     setTokenSuccess
 } from "../actions/productActions";
 
-export const setRequestLoginFB = (facebookToken) => {
+export const setRequestLoginFB = (accessToken) => {
     return async dispatch => {
         try {
-            console.log("fb111", facebookToken);
-            const res = await submitTokenFacebook(facebookToken);
+            const res = await submitTokenFacebook(accessToken);
+            console.log(res.data);
             dispatch(setTokenSuccess(res?.data?.content?.accessToken));
         }
         catch (error) {
@@ -101,7 +101,6 @@ export const getRequestProfile = (token) => {
 export const getRequestProductFavorite = (token) => {
     return async dispatch => {
         try {
-            console.log("favorite", token);
             const res = await getProductFavorite(token);
             dispatch(getProductFavoriteSuccess(res?.data?.content?.productsFavorite));
         }

@@ -10,10 +10,8 @@ export default function LoadToken() {
     const token = useSelector(getTokenSelectors);
     const nav = useNavigation();
     const dispatch = useDispatch();
-    console.log(token);
     useEffect(() => {
         getItem();
-
     }, [])
 
     getItem = async () => {

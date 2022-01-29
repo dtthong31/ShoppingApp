@@ -12,7 +12,6 @@ export default function LikeProductDetail() {
     const navigation = useNavigation();
     const productsFavorite = useSelector(getProductsFavoriteSelectors);
     const token = useSelector(getTokenSelectors);
-    console.log(productsFavorite);
     useEffect(() => {
         dispatch(getRequestProductFavorite(token));
     }, [])
