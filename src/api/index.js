@@ -68,7 +68,7 @@ export const submitTokenFacebook = async (accessToken) => {
         }
     });
 }
-export const submitFormSignUp = async (email, password, name, phone, gender) => {
+export const submitFormSignUp = async (email, password, name, gender, phone) => {
     console.log(email, password, name, phone, gender);
     return await axios({
         method: 'post',
@@ -77,8 +77,8 @@ export const submitFormSignUp = async (email, password, name, phone, gender) => 
             email,
             password,
             name,
-            gender: gender,
-            phone,
+            gender,
+            phone
         }
     });
 }

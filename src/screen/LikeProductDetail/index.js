@@ -14,7 +14,7 @@ export default function LikeProductDetail() {
     const token = useSelector(getTokenSelectors);
     useEffect(() => {
         dispatch(getRequestProductFavorite(token));
-    }, [])
+    })
     const renderItemFavorite = (item) => {
         return <View style={styles.viewImg}>
             <Text style={styles.textName}>{item.name}</Text>

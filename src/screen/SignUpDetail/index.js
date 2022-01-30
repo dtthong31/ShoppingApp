@@ -29,12 +29,12 @@ const SignUpDetail = () => {
         gender: gender,
         phone: ''
     }
-    const onSubmit = async ({ email, password, name, phone, gender }) => {
+    const onSubmit = async ({ email, password, name, gender, phone }) => {
         try {
             const result = await submitFormSignUp(email, password, name, gender, phone);
             const res = result?.data?.statusCode;
             console.log("res", JSON.stringify(result.data, null, "  "));
-            if (res === '200') {
+            if (res === 201) {
                 navigation.navigate(screenName.login);
             }
         } catch (error) {
@@ -73,6 +73,7 @@ const SignUpDetail = () => {
                                     font={fontIcon.evilIcons}
                                     icon='lock' size={30}
                                     placeholder='Password'
+                                    secureTextEntry={true}
                                     errorText={touched.password && errors.password}
                                     onBlur={handleBlur('password')} />
                                 <TextInput
