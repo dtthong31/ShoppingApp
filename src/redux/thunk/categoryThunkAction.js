@@ -99,6 +99,7 @@ export const getRequestProfile = (token) => {
     }
 }
 export const getRequestProductFavorite = (token) => {
+    console.log("co goi");
     return async dispatch => {
         try {
             const res = await getProductFavorite(token);
@@ -115,7 +116,7 @@ export const setRequestLikeproduct = (payload) => {
         try {
 
             const res = await setLikeProduct(payload);
-            console.log(res.status);
+            console.log("like", JSON.stringify(res.data, null, " "));
         }
         catch (error) {
             console.log(error);
@@ -127,7 +128,7 @@ export const setRequestUnLikeproduct = (payload) => {
         try {
 
             const res = await setUnLikeProduct(payload);
-            console.log(res.status);
+            console.log("unlike", res.status);
         }
         catch (error) {
             console.log(error);

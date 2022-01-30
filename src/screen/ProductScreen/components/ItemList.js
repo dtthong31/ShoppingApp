@@ -15,14 +15,14 @@ const ItemList = (props) => {
 
     const onPress = () => {
         if (check) {
+            dispatch(setRequestUnLikeproduct({ id: item.id, token: token }));
+            setColor('gray');
             setCheck(false);
-            setColor('#f93e3e');
-            dispatch(setRequestLikeproduct({ id: item.id, token: token }));
             dispatch(getRequestProductFavorite(token));
         } else {
+            dispatch(setRequestLikeproduct({ id: item.id, token: token }));
             setCheck(true);
-            setColor('gray');
-            dispatch(setRequestUnLikeproduct({ id: item.id, token: token }));
+            setColor('#f93e3e');
             dispatch(getRequestProductFavorite(token));
         }
     }
@@ -32,7 +32,7 @@ const ItemList = (props) => {
         } else {
             setColor('gray');
         }
-    }, [check])
+    })
     return (
         <TouchableOpacity onPress={() => { navigation.navigate(screenName.productDetail, { id: item.id, color: color, check: check, token: token }) }}>
             <View style={{ height: 220, }}>

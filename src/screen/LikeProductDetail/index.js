@@ -1,4 +1,4 @@
-import React, { useEffect, } from 'react'
+import React, { useCallback, useEffect, } from 'react'
 import { FlatList, Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { getRequestProductFavorite, } from '../../redux/thunk/categoryThunkAction';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,11 +10,16 @@ import { useNavigation } from '@react-navigation/native';
 export default function LikeProductDetail() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    const productsFavorite = useSelector(getProductsFavoriteSelectors);
     const token = useSelector(getTokenSelectors);
+    const productsFavorite = useSelector(getProductsFavoriteSelectors);
     useEffect(() => {
+        console.log("token111 update", productsFavorite);
         dispatch(getRequestProductFavorite(token));
-    })
+    }, [token])
+    // const updateProduct = useCallback(() => {
+    //     productsFavorite = useSelector(getProductsFavoriteSelectors);
+    // }, [productsFavorite])
+
     const renderItemFavorite = (item) => {
         return <View style={styles.viewImg}>
             <Text style={styles.textName}>{item.name}</Text>
