@@ -68,12 +68,12 @@ const SignUpDetail = () => {
                                     onBlur={handleBlur('email')}
                                     errorText={touched.email && errors.email} />
                                 <TextInput
-                                    onChangeText={handleChange('password')}
                                     value={password}
                                     font={fontIcon.evilIcons}
                                     icon='lock' size={30}
                                     placeholder='Password'
                                     secureTextEntry={true}
+                                    onChangeText={handleChange('password')}
                                     errorText={touched.password && errors.password}
                                     onBlur={handleBlur('password')} />
                                 <TextInput
@@ -87,14 +87,14 @@ const SignUpDetail = () => {
                                     style={{ marginHorizontal: 5 }} />
                                 <RadioButton.Group
                                     onValueChange={newValue => setChecked(newValue)}
-                                    value={checked}>
+                                    value={gender}>
                                     <View style={styles.viewRadio}>
                                         <View style={styles.radioBtn}>
-                                            <RadioButton value={gender} />
+                                            <RadioButton value={true} />
                                             <Text style={styles.textRadio}>Male</Text>
                                         </View>
                                         <View style={styles.radioBtn}>
-                                            <RadioButton value="false" />
+                                            <RadioButton value={false} />
                                             <Text style={styles.textRadio}>Female</Text>
                                         </View>
                                     </View>
